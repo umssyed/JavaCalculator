@@ -421,19 +421,26 @@ class CalculatorApp extends JFrame implements ActionListener {
         String previousExpression = calculatedFieldText.getText();
 
         if (requestedOperation) {
+
+            String requestedExpression = calculatedFieldText.getText();
             // Update Input Field to show '='
             calculatedFieldText.setText(previousExpression + displayFieldText.getText() + " = ");
-            String requestedExpression = calculatedFieldText.getText();
 
             // Remove any non-numeric characters to extract numbers only
-            String numericExpression = requestedExpression.replaceAll("[^0-9.]", " ");
+            String numericExpression = calculatedFieldText.getText().replaceAll("[^0-9.]", " ");
             String elements[] = numericExpression.split("\\s+");
             num1 = Float.parseFloat(elements[0]);
+            System.out.println("Length of expression: " + elements.length);
             if (elements.length > 1) {
                 num2 = Float.parseFloat(elements[1]);
+
             } else {
+                System.out.println("Requested operation but no second input");
                 num2 = ans;
+                // Update Input Field to show '='
+                calculatedFieldText.setText(previousExpression + String.valueOf(num2) + " = ");
             }
+
         } else {
             String numericPreviousExpression = previousExpression.replaceAll("[^0-9.]", " ");
             String elements[] = numericPreviousExpression.split("\\s+");
@@ -503,38 +510,47 @@ class CalculatorApp extends JFrame implements ActionListener {
     }
 
     public void add() {
-        // Update Input Field to show '+'
-        calculatedFieldText.setText(displayFieldText.getText() + " + ");
-        //ans = Float.parseFloat(displayFieldText.getText());
-        displayFieldText.setText("");
-        operationEnvoked = '+';
-        requestedOperation = true;
+        if (!requestedOperation) {
+            // Update Input Field to show '+'
+            calculatedFieldText.setText(displayFieldText.getText() + " + ");
+            //ans = Float.parseFloat(displayFieldText.getText());
+            displayFieldText.setText("");
+            operationEnvoked = '+';
+            requestedOperation = true;
+        }
+
     }
 
     public void subtract() {
-        // Update Input Field to show '-'
-        calculatedFieldText.setText(displayFieldText.getText() + " - ");
-        ans = Float.parseFloat(displayFieldText.getText());
-        displayFieldText.setText("");
-        operationEnvoked = '-';
-        requestedOperation = true;
+        if (!requestedOperation) {
+            // Update Input Field to show '-'
+            calculatedFieldText.setText(displayFieldText.getText() + " - ");
+            ans = Float.parseFloat(displayFieldText.getText());
+            displayFieldText.setText("");
+            operationEnvoked = '-';
+            requestedOperation = true;
+        }
     }
 
     public void multiply() {
-        // Update Input Field to show 'x'
-        calculatedFieldText.setText(displayFieldText.getText() + " x ");
-        ans = Float.parseFloat(displayFieldText.getText());
-        displayFieldText.setText("");
-        operationEnvoked = 'x';
-        requestedOperation = true;
+        if (!requestedOperation) {
+            // Update Input Field to show 'x'
+            calculatedFieldText.setText(displayFieldText.getText() + " x ");
+            ans = Float.parseFloat(displayFieldText.getText());
+            displayFieldText.setText("");
+            operationEnvoked = 'x';
+            requestedOperation = true;
+        }
     }
 
     public void divide() {
-        // Update Input Field to show '/'
-        calculatedFieldText.setText(displayFieldText.getText() + " / ");
-        ans = Float.parseFloat(displayFieldText.getText());
-        displayFieldText.setText("");
-        operationEnvoked = '/';
-        requestedOperation = true;
+        if (!requestedOperation) {
+            // Update Input Field to show '/'
+            calculatedFieldText.setText(displayFieldText.getText() + " / ");
+            ans = Float.parseFloat(displayFieldText.getText());
+            displayFieldText.setText("");
+            operationEnvoked = '/';
+            requestedOperation = true;
+        }
     }
 }

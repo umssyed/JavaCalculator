@@ -35,8 +35,8 @@ class CalculatorApp extends JFrame implements ActionListener {
     private char operationEnvoked = ' ';
     private char prevoperationEnvoked = ' ';
     private boolean requestedOperation = false;
-    private int pnum1 = 0; // Previous calculated numbers. Start from 0
-    private int pnum2 = 0; // Previous calculated numbers. Start from 0
+    private float pnum1 = 0; // Previous calculated numbers. Start from 0
+    private float pnum2 = 0; // Previous calculated numbers. Start from 0
     private float ans = 0;
     private int counter = 0;
 
@@ -418,57 +418,59 @@ class CalculatorApp extends JFrame implements ActionListener {
         float num1;
         float num2;
 
-
+        String previousExpression = calculatedFieldText.getText();
 
         if (requestedOperation) {
             // Update Input Field to show '='
-            calculatedFieldText.setText(calculatedFieldText.getText() + displayFieldText.getText() + " = ");
-            System.out.println("Requested Operation. Expression: " + calculatedFieldText.getText());
+            calculatedFieldText.setText(previousExpression + displayFieldText.getText() + " = ");
+            String requestedExpression = calculatedFieldText.getText();
+
+            // Remove any non-numeric characters to extract numbers only
+            String numericExpression = requestedExpression.replaceAll("[^0-9.]", " ");
+            String elements[] = numericExpression.split("\\s+");
+            num1 = Float.parseFloat(elements[0]);
+            if (elements.length > 1) {
+                num2 = Float.parseFloat(elements[1]);
+            } else {
+                num2 = ans;
+            }
         } else {
-            String previousExpression = calculatedFieldText.getText();
             String numericPreviousExpression = previousExpression.replaceAll("[^0-9.]", " ");
             String elements[] = numericPreviousExpression.split("\\s+");
 
             num1 = Float.parseFloat(displayFieldText.getText());
-            num2 = Float.parseFloat(elements[1]);
-
-            System.out.println("No Requested Operation. Previous Expression: " + previousExpression);
+            num2 = pnum2;
 
             calculatedFieldText.setText(String.valueOf(num1) + " " + prevoperationEnvoked + " " + String.valueOf(num2) + " = ");
         }
-        String expression = calculatedFieldText.getText();
-
-        // Remove any non-numeric characters to extract numbers only
-        String numericExpression = expression.replaceAll("[^0-9.]", " ");
-        String elements[] = numericExpression.split("\\s+");
-
-
-        num1 = Float.parseFloat(elements[0]);
-        if (elements.length > 1) {
-            num2 = Float.parseFloat(elements[1]);
-        } else {
-            num2 = ans;
-        }
 
         if (operationEnvoked == '+') {
+            pnum1 = num1;
+            pnum2 = num2;
             ans = num1 + num2;
             prevoperationEnvoked = operationEnvoked;
             operationEnvoked = ' ';
             requestedOperation = false;
         }
         else if (operationEnvoked == '-') {
+            pnum1 = num1;
+            pnum2 = num2;
             ans = num1 - num2;
             prevoperationEnvoked = operationEnvoked;
             operationEnvoked = ' ';
             requestedOperation = false;
         }
         else if (operationEnvoked == 'x') {
+            pnum1 = num1;
+            pnum2 = num2;
             ans = num1 * num2;
             prevoperationEnvoked = operationEnvoked;
             operationEnvoked = ' ';
             requestedOperation = false;
         }
         else if (operationEnvoked == '/') {
+            pnum1 = num1;
+            pnum2 = num2;
             ans = num1 / num2;
             prevoperationEnvoked = operationEnvoked;
             operationEnvoked = ' ';

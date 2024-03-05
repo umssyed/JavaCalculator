@@ -5,7 +5,10 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 
-// Create entry point for the application
+
+/**
+ * Calculator Class
+ * */
 public class Calculator {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -19,6 +22,7 @@ public class Calculator {
     }
 }
 
+/** Calculator App - extends JFrame and implements the ActionListener classes */
 class CalculatorApp extends JFrame implements ActionListener {
     public JButton numberButtons[]; // Declare JButton array of Number buttons
     private JButton operatorButtons[]; // Declare JButton array of Operator buttons
@@ -36,6 +40,7 @@ class CalculatorApp extends JFrame implements ActionListener {
     private float ans = 0;
     private int counter = 0;
 
+    /** Constructor - Calculator App. Takes no arguments */
     public CalculatorApp() {
         // Set application context
         setTitle("Java Calculator");
@@ -136,6 +141,11 @@ class CalculatorApp extends JFrame implements ActionListener {
     }
 
     // --- METHODS --- //
+    /**
+    * This method checks for whether decimal exists in user's input
+    * @params decimalExists
+    * returns 'true' if decimal exists
+    * */
     public boolean decimalExists() {
         boolean decimalExists = false;
 

@@ -4,6 +4,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 
 
 /**
@@ -13,6 +14,14 @@ public class Calculator {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             CalculatorApp app = new CalculatorApp();
+
+            // Load the logo image
+            ImageIcon icon = new ImageIcon("Calculator/resources/logo.png");
+            Image logo = icon.getImage();
+
+            // Set the icon for the JFrame
+            app.setIconImage(logo);
+
             app.setPreferredSize(new Dimension(500, 600));
             app.setSize(500, 600);
             app.setMinimumSize(new Dimension(500, 500));
@@ -42,7 +51,7 @@ class CalculatorApp extends JFrame implements ActionListener {
     /** Constructor - Calculator App. Takes no arguments */
     public CalculatorApp() {
         // Set application context
-        setTitle("Java Calculator");
+        setTitle("Simple Calculator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 

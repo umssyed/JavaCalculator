@@ -208,7 +208,7 @@ class CalculatorApp extends JFrame implements ActionListener {
 
         // KeyPad Entry for Number
         if (numCode >= KeyEvent.VK_NUMPAD0 && numCode <= KeyEvent.VK_NUMPAD9) {
-            int number = numCode = numCode - KeyEvent.VK_NUMPAD0;
+            int number = numCode - KeyEvent.VK_NUMPAD0;
             enterNumber(number);
         }
 
@@ -420,26 +420,31 @@ class CalculatorApp extends JFrame implements ActionListener {
 
         String previousExpression = calculatedFieldText.getText();
 
-        if (requestedOperation) {
+        char firstChar = calculatedFieldText.getText().charAt(0);
+        if (firstChar == '-') {
+            previousExpression = previousExpression.substring(1);
+        }
 
-            String requestedExpression = calculatedFieldText.getText();
+        if (requestedOperation) {
             // Update Input Field to show '='
             calculatedFieldText.setText(previousExpression + displayFieldText.getText() + " = ");
-
             // Remove any non-numeric characters to extract numbers only
             String numericExpression = calculatedFieldText.getText().replaceAll("[^0-9.]", " ");
             String elements[] = numericExpression.split("\\s+");
-            num1 = Float.parseFloat(elements[0]);
-            System.out.println("Length of expression: " + elements.length);
+
+            if (firstChar == '-') {
+                num1 = -Float.parseFloat(elements[0]);
+            } else {
+                num1 = Float.parseFloat(elements[0]);
+            }
+
             if (elements.length > 1) {
                 num2 = Float.parseFloat(elements[1]);
-
             } else {
-                System.out.println("Requested operation but no second input");
                 num2 = ans;
-                // Update Input Field to show '='
-                calculatedFieldText.setText(previousExpression + String.valueOf(num2) + " = ");
             }
+            // Update Input Field to show '='
+            calculatedFieldText.setText(String.valueOf(num1) + " " + operationEnvoked + " " + String.valueOf(num2) + " = ");
 
         } else {
             String numericPreviousExpression = previousExpression.replaceAll("[^0-9.]", " ");
